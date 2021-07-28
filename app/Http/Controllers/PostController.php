@@ -18,7 +18,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = DB::table('posts')
-            ->select('id','store_name','store_url','sns_url')
+            ->select('id','image','store_name','store_url','sns_url')
             ->get();
 
         return view('post.index', compact('posts'));
@@ -43,6 +43,18 @@ class PostController extends Controller
     public function store(PostForm $request)
     {
         $post = new Post;
+
+        // アップロードされた画像を取得し$imageに代入
+        $image = $request->file('image');
+        // 画像がアップロードされていればstorageに保存
+        // 実際にウェブサイトで画像を表示するにはpublicとstorageをリンクさせる必要がある
+        // $ php artisan storage:link でpublic内にstorageのリンクを作ることができる
+        if ($request->hasFile('image')) {
+            $path = \Storage::put('/public', $image);
+            $path = explode('/', $path);
+        } else {
+            $path = null;
+        }
         
         // preg_match_allを使用して#タグのついた文字列を取得している
         preg_match_all('/#([a-zA-z0-9０-９ぁ-んァ-ヶー一-龠]+)/u', $request->comment, $match);
@@ -68,6 +80,7 @@ class PostController extends Controller
 
 
         $post->store_name = $request->input('store_name');
+        $post->image = $path[1];
         $post->address = $request->input('address');
         $post->store_url = $request->input('store_url');
         $post->sns_url = $request->input('sns_url');

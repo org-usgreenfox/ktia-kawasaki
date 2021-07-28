@@ -23,6 +23,7 @@ class PostFactory extends Factory
     public function definition()
     {
         return [
+            'image' => $this->faker->imageUrl,
             'store_name' => $this->faker->word,
             'address' => $this->faker->address,
             'store_url' => $this->faker->url,

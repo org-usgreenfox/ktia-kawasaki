@@ -15,6 +15,9 @@
                     @endif
 
                     <div class="d-flex flex-column bd-highlight mb-3">
+                        @if(!empty($post->image))
+                        <img src="{{ '/storage/' . $post->image }} " class="" alt="photo">
+                        @endif
                         <div class="p-2 bd-highlight">{{ $post->store_name }}</div>
                         <div class="p-2 bd-highlight">{{ $post->address }}</div>
                         <div class="p-2 bd-highlight">
