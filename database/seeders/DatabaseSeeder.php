@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use App\Models\Post;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,6 +14,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call('CraftBeersSeeder::class');
+        
+        $this->call(PostSeeder::class);
+        // \App\Models\User::factory(10)->create();
+        // $this->call([
+        //     PostSeeder::class
+        // ]);
     }
 }
