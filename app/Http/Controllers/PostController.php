@@ -18,7 +18,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = DB::table('posts')
-            ->select('id','image','store_name','store_url','sns_url')
+            - ->select('id','image','store_name','store_url','sns_url'))
             ->get();
 
         return view('post.index', compact('posts'));

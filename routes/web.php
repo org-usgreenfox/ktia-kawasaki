@@ -29,3 +29,4 @@ Route::resource('post', PostController::class);
 
 Route::get('tag',[TagController::class, 'tagIndex'])->name('tag.index');
 Route::get('map',[MapController::class, 'mapIndex'])->name('map.index');
+Route::get('map/{id}',[MapController::class, 'mapShow'])->name('map.show');
