@@ -20,7 +20,7 @@ class MapController extends Controller
     public function mapShow($id)
     {
         $post = Post::find($id);
-        dd($post);
+        // dd($post);
         return view('map.show',compact('post'));
     }
 }

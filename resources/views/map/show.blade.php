@@ -69,7 +69,7 @@
       });
       }
 
-        const markers = @json($posts);
+        const markers = @json($post);
         var geocoder = new google.maps.Geocoder();
         console.log('');
 

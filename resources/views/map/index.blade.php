@@ -8,7 +8,7 @@
 <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key=AIzaSyB1mp7xlyXS_pjA6QredHZ80UyE7TDIaWs&callback=initMap" async defer></script>
 <script>
 function initMap() {
-    'use strict';
+   'use strict';
 
     var target = document.getElementById('target');
     var position = {lat: 34.6524992, lng: 135.5063058}; //tutenkaku
