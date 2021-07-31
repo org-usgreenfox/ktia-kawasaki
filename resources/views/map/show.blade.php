@@ -4,15 +4,9 @@
 <head>
   <meta charset="utf-8">
   <title>My Map</title>
-  <style>
-    #target {
-      width: 550px;
-      height: 550px;
-    }
-  </style>
 </head>
 <body>
-  <div id="target"></div>
+  <div id="target" style="width: 550px; height: 550px;"></div>
   <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key=AIzaSyB1mp7xlyXS_pjA6QredHZ80UyE7TDIaWs&callback=initMap" async defer></script>
   <script>
   function initMap() {

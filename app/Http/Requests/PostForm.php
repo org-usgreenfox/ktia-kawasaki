@@ -25,6 +25,7 @@ class PostForm extends FormRequest
     {
         return [
             'store_name' => 'required',
+            'image' => '',
             'address' => 'required',
             'store_url' => 'url|nullable',
             'sns_url' => 'url|nullable',

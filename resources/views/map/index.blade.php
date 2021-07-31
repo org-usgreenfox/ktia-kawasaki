@@ -1,16 +1,12 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="utf-8">
-  <title>My Map</title>
-  <style>
-    
-  </style>
-</head>
-<body>
+@extends('layouts.app')
+
+@section('content')
 <div id="target" style="width: 550px; height: 550px;" ></div>
+@endsection
+
+@section('script')
 <script src="https://maps.googleapis.com/maps/api/js?language=ja&region=JP&key=AIzaSyB1mp7xlyXS_pjA6QredHZ80UyE7TDIaWs&callback=initMap" async defer></script>
-<script >
+<script>
 function initMap() {
     'use strict';
 
@@ -107,5 +103,4 @@ function initMap() {
     } 
 }  
 </script>
-</body>
-</html>
+@endsection

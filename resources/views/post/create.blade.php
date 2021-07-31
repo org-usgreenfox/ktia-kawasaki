@@ -20,7 +20,7 @@
                         </div>
                     @endforeach
 
-                    <form method="POST" action="{{ route('post.store') }}">
+                    <form method="POST" action="{{ route('post.store') }}" enctype="multipart/form-data">
                     
                     <!-- CROSS Site Request Forgery Protection -->
                     @csrf
@@ -48,6 +48,11 @@
                     <div class="form-group">
                         <label>Tag</label>
                         <textarea class="form-control" name="comment" id="comment" rows="4"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="image">Store Image</label>
+                        <input type="file" class="form-control-file" name="image" id="image">
                     </div>
 
                     <input type="submit" name="send" value="Submit" class="btn btn-dark btn-block">
