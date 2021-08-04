@@ -5,44 +5,34 @@
 @endsection
 
 <!--
-    ・やったこと
-    1,map作成とmarker作成をそれぞれ別の関数にした
-    2,map作成は後でawaitを使用するためPromiseを返すようにしている ←これが自信ない
-    3,sync/awaitを使ってmap作成してからmarker作成する関数を定義
-    4,実行
+    function initMap() {
+        var map;
 
-    ・大まかなコード
-    function initMap(){
-        function createMap() {return new Promise...}
-        function createMarker() {...}
-
-        sync function createMapMarker() {
-            await createMap();
-            createMarker();
+        function createMap() {
+            map = new google.maps.Map {...}
         }
 
-        createMapMarker();
+        function createMarker() {
+            marker = new google.maps.Marker {
+                map : map                        <=== function createMap()で定義したmapを指定したいがオブジェクトが消えてる
+            }
+        }
     }
-
-    ・結果
-    createMap()で地図は生成されたけど、createMarker()が実行されない。
-    promise周辺の書き方が悪くてcreateMap()が完了しない？
-
 -->
 
 @section('script')
 <script defer>
      function initMap() {
         'use strict';
+        var map;
 
         function createMap() {
-            return new Promise(function() {
+            const promise = new Promise((resolve,reject) => {
                 var target = document.getElementById('target');
                 var position = {
                     lat: 34.6524992,
                     lng: 135.5063058
                 }; //tutenkaku
-                var map;
                 if (navigator.geolocation) {
                     // 現在地を取得
                     navigator.geolocation.getCurrentPosition(
@@ -65,6 +55,7 @@
                                 map: map, // 対象の地図オブジェクト
                                 position: mapLatLng // 緯度・経度
                             });
+                            resolve();
                         },
                         // 取得失敗した場合
                         function(error) {
@@ -142,6 +133,7 @@
         async function createMapMarker() 
         {
             await createMap();
+            console.log(map);
             createMarker();
         }
 
