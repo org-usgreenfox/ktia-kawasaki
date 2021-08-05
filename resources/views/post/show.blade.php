@@ -34,7 +34,7 @@
                     </div>
                     <div class="btn-group">
                         @foreach($tags as $tag)
-                        <form mthod="GET" action="{{ route('tag.index') }}">
+                        <form method="GET" action="{{ route('tag.index') }}">
                         <input type="submit" class="btn-outline-dark btn-sm mx-1 p-1" value="{{ $tag }}">
                         <input type="hidden" name="tag" value="{{ $tag }}">
                         </form>
