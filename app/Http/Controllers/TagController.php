@@ -12,7 +12,7 @@ class TagController extends Controller
 {
     public function tagIndex(Request $request)
     {   
-        if(!isset($request->input)){
+        if(!isset($request->tag)){
             return redirect('post');
         }
         
