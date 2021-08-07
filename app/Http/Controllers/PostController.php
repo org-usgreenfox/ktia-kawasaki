@@ -44,7 +44,7 @@ class PostController extends Controller
         }
         
         
-        return view('post.search', compact('searched_posts'));
+        return view('post.search', compact('searched_posts', 'search'));
     }
         
     /**

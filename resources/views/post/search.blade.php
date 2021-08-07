@@ -9,7 +9,7 @@
 
         <div class="form-group">
             <label>Search Word</label>
-            <input type="text" class="form-control" name="store_name" id="store_name">
+            <input type="text" class="form-control" name="store_name" id="store_name" value="{{ $search }}">
         </div>
         <input type="submit" name="send" value="Search" class="btn btn-dark btn-block">
     </form>
