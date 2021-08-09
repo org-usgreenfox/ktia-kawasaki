@@ -14,10 +14,11 @@
                         </div>
                     @endif
 
-                    
+                    @auth 
                     <a href="{{ route('post.create') }}">
                         <button type="button" class="btn btn-dark btn-block">create new Store</button>
                     </a>
+                    @endauth
                     <a href="{{ route('map.index') }}" target="_blank">
                         <button type="button" class="btn btn-dark btn-block mt-1">map</button>
                     </a>

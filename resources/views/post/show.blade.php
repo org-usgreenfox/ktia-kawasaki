@@ -44,6 +44,7 @@
                     </div>
 
 
+                    @auth
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <form method="GET" action="{{ route('post.edit', ['post' => $post->id ]) }}" >
                     <!-- CROSS Site Request Forgery Protection -->
@@ -57,6 +58,7 @@
                     @method('DELETE')
                     </form>
                     </div>
+                    @endauth
 
                 </div>
             </div>
