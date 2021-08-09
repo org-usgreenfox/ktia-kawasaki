@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container" id="target" style="width: 550px; height: 550px;"></div>
+<div class="container" id="target" style="width: 750px; height: 550px;"></div>
 @endsection
 
 @section('script')
@@ -10,18 +10,20 @@
         'use strict';
         var map;
         var target = document.getElementById('target');
-        
+        var marker;
+        var latLng;
+
         if (navigator.geolocation) {
             // 現在地を取得
             navigator.geolocation.getCurrentPosition(
                 // 取得成功した場合
                 function(position) {
                     // 緯度・経度を変数に格納
-                    var mapLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                    latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                     // マップオプションを変数に格納
                     var mapOptions = {
                         zoom: 12, // 拡大倍率
-                        center: mapLatLng // 緯度・経度
+                        center: latLng // 緯度・経度
                     };
                     // マップオブジェクト作成
                     map = new google.maps.Map(
@@ -29,27 +31,34 @@
                         mapOptions // マップオプション
                     );
                     //　マップに現在地マーカーを表示する
-                    var marker = new google.maps.Marker({
+                    marker = new google.maps.Marker({
                         map: map, // 対象の地図オブジェクト
-                        position: mapLatLng // 緯度・経度
+                        position: latLng, // 緯度・経度
+                        icon: "/img/mapPin.png",
                     });
                     // 店舗リストのマーカーを取得、表示する
-                    const markers = @json($posts);
+                    @foreach($posts as $post)
+                    var markers = @json($post);
                     var geocoder = new google.maps.Geocoder();
-                    for (var i in markers) {
+                    var infoWindow = [];
+                        (function () {　//即時関数　これがないとinfoWindowがうまく表示できない
                         geocoder.geocode(
                             {
-                                address: markers[i]['address']
+                                address: markers['address']
                             },
                             function(results, status) {
                                 if (status == google.maps.GeocoderStatus.OK && results[0].geometry) {
-                                    var lat = results[0].geometry.location.lat();
-                                    var lng = results[0].geometry.location.lng();
+                                    latLng = results[0].geometry.location;
+                                    marker = new google.maps.Marker({
+                                        position: latLng,
+                                        map: map,
+                                    });
 
-                                    var position = {
-                                        lat: lat,
-                                        lng: lng
-                                    }; //latに変数lat, lngに変数lngを代入
+                                    var markerLink = '<a href="{{ route('post.show',['post' => $post->id]) }}">{{$post->store_name}}</a>';
+                                    addListenerPoint(
+                                        marker,
+                                        markerLink
+                                        );
 
                                 } else if (status == google.maps.GeocoderStatus.ZERO_RESULTS) {
                                     alert("住所が見つかりませんでした。");
@@ -64,14 +73,18 @@
                                 } else if (status == google.maps.GeocoderStatus.UNKNOWN_ERROR) {
                                     alert("原因不明のエラーが発生しました。");
                                 }
-
-                                marker[i] = new google.maps.Marker({
-                                    position: position,
-                                    map: map,
-                                });
                             } //function(results, status)
                         ); //geocoder
-                    } //for
+                        }) ();
+                    @endforeach
+                    function addListenerPoint(m_marker,m_content){
+                        google.maps.event.addListener(m_marker, 'click', function(event) {
+                            var infoWindow = new google.maps.InfoWindow({
+                                content: m_content
+                            });
+                            infoWindow.open(map, m_marker);
+                        });
+                    }
                 },
                 // 取得失敗した場合
                 function(error) {
@@ -94,13 +107,13 @@
             ); //getCurrentPosition
         // Geolocation APIに対応していない
         } else {
-            alert("この端末では位置情報が取得できません");
-            var position = {
+            alert("この端末では位置情報が取得できません。通天閣に移動します");
+            latLng = {
             lat: 34.6524992,
             lng: 135.5063058
             };//通天閣
             var map = new google.maps.Map(target, {
-                center: position,
+                center: latLng,
                 disableDefaultUI: true,
                 zoomControl: true,
                 zoom: 6
