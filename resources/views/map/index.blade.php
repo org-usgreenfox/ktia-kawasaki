@@ -20,7 +20,7 @@
                     var mapLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                     // マップオプションを変数に格納
                     var mapOptions = {
-                        zoom: 6, // 拡大倍率
+                        zoom: 12, // 拡大倍率
                         center: mapLatLng // 緯度・経度
                     };
                     // マップオブジェクト作成
@@ -65,7 +65,7 @@
                                     alert("原因不明のエラーが発生しました。");
                                 }
 
-                                var marker = new google.maps.Marker({
+                                marker[i] = new google.maps.Marker({
                                     position: position,
                                     map: map,
                                 });

@@ -18,6 +18,9 @@
                     <a href="{{ route('post.create') }}">
                         <button type="button" class="btn btn-dark btn-block">create new Store</button>
                     </a>
+                    <a href="{{ route('map.index') }}">
+                        <button type="button" class="btn btn-dark btn-block mt-1">map</button>
+                    </a>
                 </div>
                 <div class="container">
                     <div class="row">

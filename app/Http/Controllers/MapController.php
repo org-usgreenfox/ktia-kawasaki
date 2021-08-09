@@ -19,8 +19,11 @@ class MapController extends Controller
 
     public function mapShow($id)
     {
+        $posts = DB::table('posts')
+            ->select('id','store_name','address')
+            ->get();
         $post = Post::find($id);
         // dd($post);
-        return view('map.show',compact('post'));
+        return view('map.show',compact('posts','post'));
     }
 }

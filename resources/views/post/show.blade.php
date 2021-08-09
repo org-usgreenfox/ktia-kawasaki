@@ -19,7 +19,9 @@
                         <img src="{{ '/storage/' . $post->image }} " class="" alt="photo">
                         @endif
                         <div class="p-2 bd-highlight">{{ $post->store_name }}</div>
-                        <div class="p-2 bd-highlight">{{ $post->address }}</div>
+                        <div class="p-2 bd-highlight">
+                            <a href="{{ route('map.show', ['id' => $post->id ]) }}" target="blank">{{ $post->address }}</a>
+                        </div>
                         <div class="p-2 bd-highlight">
                             @if(!empty($post->store_url))
                             <a href="{{ $post->store_url }}" target="blank">HP</a>
