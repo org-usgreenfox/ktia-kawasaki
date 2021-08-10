@@ -25,6 +25,29 @@ class PostController extends Controller
     }
 
     /**
+     * Displays a listing of searched resources.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        $query = Post::query();
+
+        $search = $request->input('store_name');
+
+        $searched_posts = $query
+        ->select('id','image','store_name','store_url','sns_url')
+        ->get();
+
+        if ($request->has('store_name') && $search != '') {
+            $searched_posts = $query->where('store_name', 'like', '%' . $search . '%')->get();
+        }
+        
+        
+        return view('post.search', compact('searched_posts', 'search'));
+    }
+        
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

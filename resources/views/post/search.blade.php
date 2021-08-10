@@ -38,7 +38,7 @@
                 </div>
                 <div class="container">
                     <div class="row">
-                        @foreach($posts as $post)
+                        @foreach($searched_posts as $post)
                         <div class="box p-2 col-4">
                             <div class="card">
                                 <!-- 実際にウェブサイトで画像を表示するにはpublicとstorageをリンクさせる必要がある

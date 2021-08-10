@@ -30,6 +30,9 @@ Route::group(['middleware' => 'auth'], function() {
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+
+Route::post('post/search', [PostController::class, 'search'])->name('post.search');
+
 Route::resource('post', PostController::class)->only([
     'index','show'
 ]);
