@@ -21,7 +21,7 @@
                         
                         <div class="p-2 bd-highlight">{{ $show_post['post']->store_name }}</div>
                         <div class="p-2 bd-highlight">
-                            <a href="{{ route('map.show', ['id' => $post->id ]) }}" target="blank">{{ $show_post['post']->address }}</a>
+                            <a href="{{ route('map.show', ['id' => $show_post['post']->id ]) }}" target="blank">{{ $show_post['post']->address }}</a>
                         </div>
                         <div class="p-2 bd-highlight">
                             @if(!empty($show_post['post']->store_url))
@@ -67,12 +67,13 @@
                     @endauth
 
                 </div>
-            </div>
+            </div>         
             <div class="reviews">
-                @if(empty($show_post['reviews']))
+                @if(!empty($show_post['reviews'][0]))
                 <h3 class="mt-1 mb-0">Review list</h3>
                 @endif
                 @foreach($show_post['reviews'] as $review)
+                
                 <div class="card">
                     <div class="card-body d-flex justify-content-between">
                         <div class="detail">

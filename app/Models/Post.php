@@ -45,7 +45,7 @@ class Post extends Model
         foreach($match[0] as $str){
             $rev_comment = str_replace($str, '', $rev_comment);
         }
-
+        
         
         $post_data = array(
             "post" => $post,
@@ -54,8 +54,7 @@ class Post extends Model
             "reviews" => $reviews,
         );
 
-        
-        return $post_data;
+            return $post_data;
 
     }
 
