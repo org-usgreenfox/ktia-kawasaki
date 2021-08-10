@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Tag;
+use App\Models\Review;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\PostForm;
 
@@ -99,24 +100,9 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::find($id);
-        
-        $tag_collection = $post->tags;
-
-        $tags = [];
-        foreach($tag_collection as $tag){
-            $tag_name = $tag->name;
-            array_push($tags, $tag_name);
-        }
-
-        preg_match_all('/#([a-zA-z0-9０-９ぁ-んァ-ヶー一-龠]+)/u', $post->comment, $match);
-        $rev_comment = $post->comment;
-
-        foreach($match[0] as $str){
-            $rev_comment = str_replace($str, '', $rev_comment);
-        }
-
-        return view('post.show',compact('post', 'tags','rev_comment'));
+        $post = new Post;
+        $show_post = $post->showPost($id);
+        return view('post.show',compact('show_post'));
     }
 
     /**

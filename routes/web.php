@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\MapController;
+use App\Http\Controllers\ReviewController;
 
 
 /*
@@ -26,6 +27,8 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::resource('post', PostController::class);
+Route::get('create/{id}', [ReviewController::class, 'create'])->name('review.create');
+Route::post('review', [ReviewController::class, 'store'])->name('review.store');
 
 Route::get('tag',[TagController::class, 'tagIndex'])->name('tag.index');
 Route::get('map',[MapController::class, 'mapIndex'])->name('map.index');
