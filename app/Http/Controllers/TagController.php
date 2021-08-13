@@ -36,10 +36,10 @@ class TagController extends Controller
 
         //配列:$post_idsを使ってposts_tableから投稿を配列:$postsに取得
         $posts = DB::table('posts')
-            ->select('id','store_name','store_url','sns_url')
+            ->select('id','image','store_name','store_url','sns_url')
             ->whereIn('id', $post_ids)
             ->get();
         
-        return view('tag.index', compact('posts'));
+        return view('post.index', compact('posts'));
     }
 }

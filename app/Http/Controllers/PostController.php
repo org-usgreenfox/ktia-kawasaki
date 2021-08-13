@@ -41,11 +41,11 @@ class PostController extends Controller
         ->get();
 
         if ($request->has('store_name') && $search != '') {
-            $searched_posts = $query->where('store_name', 'like', '%' . $search . '%')->get();
+            $posts = $query->where('store_name', 'like', '%' . $search . '%')->get();
         }
         
         
-        return view('post.search', compact('searched_posts', 'search'));
+        return view('post.index', compact('posts', 'search'));
     }
         
     /**
