@@ -2,14 +2,11 @@
 
 @section('content')
 <div class="container">
-    <form method="POST" action="{{ route('post.search') }}" enctype="multipart/form-data">
-
-        <!-- CROSS Site Request Forgery Protection -->
+    <form method="POST" action="{{ route('post.search') }}">
         @csrf
-
         <div class="form-group">
             <label>Search Word</label>
-            <input type="text" class="form-control" name="store_name" id="store_name">
+            <input type="text" class="form-control" name="keyword" id="keyword" value="{{ $search }}">
         </div>
         <input type="submit" name="send" value="Search" class="btn btn-dark btn-block">
     </form>

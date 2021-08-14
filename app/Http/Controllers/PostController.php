@@ -33,17 +33,19 @@ class PostController extends Controller
     public function search(Request $request)
     {
         $query = Post::query();
+        $search = $request->input('keyword');
 
-        $search = $request->input('store_name');
-
-        $searched_posts = $query
-        ->select('id','image','store_name','store_url','sns_url')
-        ->get();
-
-        if ($request->has('store_name') && $search != '') {
-            $posts = $query->where('store_name', 'like', '%' . $search . '%')->get();
+        if ($request->has('keyword') && $search != '') {
+            $posts = $query
+                ->where('store_name', 'like', '%' . $search . '%')
+                ->orWhere('address', 'like', '%' . $search . '%')
+                ->orWhere('comment', 'like', '%' . $search . '%')
+                ->get();
+        } else {
+            $posts = $query
+                ->select('id','image','store_name','store_url','sns_url')
+                ->get();
         }
-        
         
         return view('post.index', compact('posts', 'search'));
     }
