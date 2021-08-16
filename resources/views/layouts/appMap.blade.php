@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container" id="target" style="width: 750px; height: 550px;"></div>
+<div class="card">
+    <div class="container " id="target" style="width: 100%; height: 550px;"></div>
+</div>
 @endsection
 
 @section('script')

@@ -10,13 +10,12 @@ use Illuminate\Support\Facades\DB;
 
 class TagController extends Controller
 {
-    public function tagIndex(Request $request)
+    public function tagIndex($tag)
     {   
-        if(!isset($request->tag)){
-            return redirect('post');
-        }
-        
-        $tag = $request->input('tag');
+        // if(!isset($request->tag)){
+        //     return redirect('post');
+        // }
+        // $tag = $request->input('tag');
         
         $field = Tag::query()
             ->where('name', $tag)
@@ -35,11 +34,13 @@ class TagController extends Controller
         }
 
         //配列:$post_idsを使ってposts_tableから投稿を配列:$postsに取得
-        $posts = DB::table('posts')
-            ->select('id','image','store_name','store_url','sns_url')
+        $posts = Post::query()
+            ->with('tags')
             ->whereIn('id', $post_ids)
             ->get();
+
+        $search = '#'.$tag;
         
-        return view('post.index', compact('posts'));
+        return view('post.index', compact('posts','search'));
     }
 }

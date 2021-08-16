@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Bar info</div>
+                <div class="card-header">{{ $show_post['post']->store_name }}</div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -18,29 +18,25 @@
                         @if(!empty($show_post['post']->image))
                         <img src="{{ '/storage/' . $show_post['post']->image }} " class="" alt="photo">
                         @endif
-                        
-                        <div class="p-2 bd-highlight">{{ $show_post['post']->store_name }}</div>
                         <div class="p-2 bd-highlight">
-                            <a href="{{ route('map.show', ['id' => $show_post['post']->id ]) }}" target="blank">{{ $show_post['post']->address }}</a>
+                            <a href="{{ route('map.show', ['id' => $show_post['post']->id ]) }}" target="blank"><i class="fas fa-map-marked-alt mr-2"></i>{{ $show_post['post']->address }}</a>
                         </div>
-                        <div class="p-2 bd-highlight">
-                            @if(!empty($show_post['post']->store_url))
-                            <a href="{{ $show_post['post']->store_url }}" target="blank">HP</a>
-                            @endif
-                        </div>
-                        <div class="p-2 bd-highlight">
-                            @if(!empty($show_post['post']->sns_url))
-                            <a href="{{ $show_post['post']->sns_url }}" target="blank">Instagram</a>
-                            @endif
-                        </div>
+                        @if(!empty($show_post['post']->store_url))
+                            <div class="p-2 bd-highlight">
+                                <a href="{{ $show_post['post']->store_url }}" target="blank"><i class="fas fa-home mr-2"></i>HP</a>
+                            </div>
+                        @endif
+                        @if(!empty($show_post['post']->sns_url))
+                            <div class="p-2 bd-highlight">
+                                <a href="{{ $show_post['post']->sns_url }}" target="blank"><i class="fab fa-instagram mr-2"></i>Instagram</a>
+                            </div>
+                        @endif
                         <div class="p-2 bd-highlight">{{ $show_post['rev_comment'] }}</div>
                     </div>
-                    <div class="btn-group">
+                    <div class="p-2 btn-group text-align-center">
+                        <i class="fas fa-tags mr-2"></i>
                         @foreach($show_post['tags'] as $tag)
-                        <form method="GET" action="{{ route('tag.index') }}">
-                            <input type="submit" class="btn-outline-dark btn-sm mx-1 p-1" value="{{ $tag }}">
-                            <input type="hidden" name="tag" value="{{ $tag }}">
-                        </form>
+                        <a class="btn-outline-dark btn-sm mx-1 p-1" href="{{ route('tag.index', ['tag' => $tag]) }}">#{{ $tag }}</a>
                         @endforeach
                     </div>
 

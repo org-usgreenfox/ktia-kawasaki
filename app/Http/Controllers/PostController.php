@@ -18,10 +18,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = DB::table('posts')
-            ->select('id','image','store_name','store_url','sns_url')
-            ->get();
-
+        $posts = Post::with('tags')->get();
+        // Post::all() + Post::tags()で紐づいているデータ
+        // ex) $posts[0]->tags[0]->name ・・・最初のpostについている最初のタグ
+        
         return view('post.index', compact('posts'));
     }
 
@@ -37,13 +37,14 @@ class PostController extends Controller
 
         if ($request->has('keyword') && $search != '') {
             $posts = $query
+                ->with('tags')
                 ->where('store_name', 'like', '%' . $search . '%')
                 ->orWhere('address', 'like', '%' . $search . '%')
                 ->orWhere('comment', 'like', '%' . $search . '%')
                 ->get();
         } else {
             $posts = $query
-                ->select('id','image','store_name','store_url','sns_url')
+                ->with('tags')
                 ->get();
         }
         
@@ -127,6 +128,7 @@ class PostController extends Controller
     {
         $post = new Post;
         $show_post = $post->showPost($id);
+
         return view('post.show',compact('show_post'));
     }
 
