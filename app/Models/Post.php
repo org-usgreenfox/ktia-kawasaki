@@ -29,6 +29,7 @@ class Post extends Model
         foreach($reviews as $review) {
             // dd($review['user_id']);
             $review['user_name'] = DB::table('users')->where('id', $review->user_id)->select('name')->first()->name;
+            $review['user_id'] = DB::table('users')->where('id', $review->user_id)->select('id')->first()->id;
         }
         
         $tag_collection = $post->tags;

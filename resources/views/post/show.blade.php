@@ -79,7 +79,9 @@
                         <div class="detail">
                             <h5 class="card-title">{{ $review->title }}</h5>
                             <p class="card-text">{{ $review->comment }}</p>
-                            <h6 class="card-text">{{ $review->user_name }}</h6>
+                            <h6 class="card-text">
+                                <a href="{{ route('user.show', ['id' => $review->user_id]) }}">{{ $review->user_name }}</a>
+                            </h6>
                         </div>
                         @if(!empty($review->image))
                         <img src="{{ '/storage/' . $review->image }} " class="card-img-top d-inline-block w-25" alt="review_image">
