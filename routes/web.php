@@ -5,6 +5,8 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\MapController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\FollowUserController;
 
 
 /*
@@ -29,7 +31,13 @@ Route::group(['middleware' => 'auth'], function() {
     Route::delete('post/{post}', [PostController::class, 'destroy'])->name('post.destroy');
     Route::get('create/{id}', [ReviewController::class, 'create'])->name('review.create');
     Route::post('review', [ReviewController::class, 'store'])->name('review.store');
+    Route::get('user/{id}', [UserController::class, 'show'])->name('user.show');
 });
+
+Route::get('/users/{user}/follow', [FollowUserController::class, 'follow'])->name('user.follow');
+Route::get('/users/{user}/unfollow', [FollowUserController::class, 'unfollow'])->name('user.unfollow');
+Route::get('/user/{user}/followed', [FollowUserController::class, 'showFollowed'])->name('user.followed');
+Route::get('/user/{user}/following', [FollowUserController::class, 'showFollowing'])->name('user.following');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
