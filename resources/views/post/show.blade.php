@@ -54,7 +54,7 @@
                             <input type="submit" name="send" value="Edit" class="btn btn-dark mx-1">
                         </form>
 
-                        <form method="POST" action="{{ route('post.destroy', ['post' => $show_post['post']->id ]) }}" id="delete_{{ $show_post['post']->id }}">
+                        <form method="POST" action="{{ route('post.destroy', ['post' => $show_post['post']->id ]) }}" id="delete_store_{{ $show_post['post']->id }}">
                             <a href="#" class="btn btn-danger mx-1" data-id="{{ $show_post['post']->id }}" onclick="deletePost(this);">Delete</a>
                             @csrf
                             @method('DELETE')
@@ -73,7 +73,16 @@
                 <div class="card">
                     <div class="card-body d-flex justify-content-between">
                         <div class="detail">
-                            <h5 class="card-title">{{ $review->title }}</h5>
+                            <h5 class="card-title">{{ $review->title }}
+                                @if ($review->user_id === Auth::user()->id)
+                                <a href="{{ route('review.edit', ['id' => $review->id]) }}"><i class="fas fa-pen-square ml-2"></i></a>
+                                <form method="POST" action="{{ route('review.destroy', ['id' => $review->id]) }}" id="delete_review_{{ $review->id }}">
+                                    <a href="#" data-id="{{ $review->id }}" onclick="deleteReview(this);"><i class="fas fa-trash-alt"></i></a>
+                                    @csrf
+                                    @method('DELETE')
+                                </form>
+                                @endif
+                            </h5>
                             <p class="card-text">{{ $review->comment }}</p>
                             <h6 class="card-text">
                                 <a href="{{ route('user.show', ['id' => $review->user_id]) }}">{{ $review->user_name }}</a>
@@ -94,7 +103,13 @@
     function deletePost(e) {
         'use strict';
         if (confirm('本当に削除しますか？')) {
-            document.getElementById('delete_' + e.dataset.id).submit();
+            document.getElementById('delete_store_' + e.dataset.id).submit();
+        }
+    }
+    function deleteReview(e) {
+        'use strict';
+        if (confirm('本当に削除しますか？')) {
+            document.getElementById('delete_review_' + e.dataset.id).submit();
         }
     }
 </script>

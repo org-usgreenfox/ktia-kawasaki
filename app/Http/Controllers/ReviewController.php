@@ -78,6 +78,19 @@ class ReviewController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $review = Review::find($id);
+
+        return view('review.edit',compact('review'));
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -86,7 +99,31 @@ class ReviewController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $review = Review::find($id);
+        // dd($review);
+        $image = $request->file('image');
+        // 画像がアップロードされていればstorageに保存
+        // 実際にウェブサイトで画像を表示するにはpublicとstorageをリンクさせる必要がある
+        // $ php artisan storage:link でpublic内にstorageのリンクを作ることができる
+        if ($request->hasFile('image')) {
+            $path = \Storage::put('/public', $image);
+            $path = explode('/', $path);
+        } else {
+            $path = null;
+        }
+
+        $review->title = $request->input('title');
+        $review->comment = $request->input('comment');
+        $review->image = $path[1];
+        $review->user_id = Auth::id();
+        
+       
+
+        $review->save();
+
+        $post = new Post;
+        $show_post = $post->showPost($review->post_id);
+        return view('post.show',compact('show_post'));
     }
 
     /**
@@ -97,6 +134,10 @@ class ReviewController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $review = Review::find($id);
+        $post_id = $review->post_id;
+        $review->delete();
+
+        return redirect()->route('post.show', ['post' => $post_id]);
     }
 }

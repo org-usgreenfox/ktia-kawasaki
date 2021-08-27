@@ -13,35 +13,40 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <form method="POST" action="{{ route('post.update', ['post' => $post->id ]) }}">
+                    <form method="POST" action="{{ route('post.update', ['post' => $post->id ]) }}" enctype="multipart/form-data">
                     <!-- CROSS Site Request Forgery Protection -->
                     @csrf      
                     @method('put')              
                     <div class="form-group">
-                        <label>店名</label>
+                        <label>Store</label>
                         <input type="text" class="form-control" name="store_name" id="store_name" value="{{ $post->store_name }}">
                     </div>
 
                     <div class="form-group">
-                        <label>住所</label>
+                        <label>Address</label>
                         <input type="text" class="form-control" name="address" id="address" value="{{ $post->address }}">
                     </div>
 
                     <div class="form-group">
-                        <label>店舗URL</label>
+                        <label>Store URL</label>
                         <input type="text" class="form-control" name="store_url" id="store_url" value="{{ $post->store_url }}">
                     </div>
 
                     <div class="form-group">
-                        <label>SNSリンク</label>
+                        <label>SNS URL</label>
                         <input type="text" class="form-control" name="sns_url" id="sns_url" value="{{ $post->sns_url }}">
                     </div>
 
                     <div class="form-group">
-                        <label>コメント</label>
+                        <label>Tag</label>
                         <textarea class="form-control" name="comment" id="comment" rows="4">{{ $post->comment }}</textarea>
                     </div>
                     
+                    <div class="form-group">
+                        <label for="image">Store Image</label>
+                        <input type="file" class="form-control-file" name="image" id="image">
+                    </div>
+
                     <input type="submit" name="send" value="Update" class="btn btn-dark btn-block">
                     </form>
 

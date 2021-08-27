@@ -41,9 +41,9 @@ class UserController extends Controller
        
         $user = new User;
         $user_data = $user->showUser($id);
-        $auth = Auth::user();
         
-        return view('user.show',compact('user_data', 'auth'));
+        
+        return view('user.show',compact('user_data'));
     }
 
     /**

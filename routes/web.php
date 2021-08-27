@@ -20,7 +20,7 @@ use App\Http\Controllers\FollowUserController;
 |
 */
 
-Route::get('/',[Postcontroller::class, 'index']);
+Route::get('/',[PostController::class, 'index']);
 
 Auth::routes();
 Route::group(['middleware' => 'auth'], function() {
@@ -29,8 +29,11 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('post/{post}/edit', [PostController::class, 'edit'])->name('post.edit');
     Route::put('post/{post}', [PostController::class, 'update'])->name('post.update');
     Route::delete('post/{post}', [PostController::class, 'destroy'])->name('post.destroy');
-    Route::get('create/{id}', [ReviewController::class, 'create'])->name('review.create');
+    Route::get('review/create/{id}', [ReviewController::class, 'create'])->name('review.create');
     Route::post('review', [ReviewController::class, 'store'])->name('review.store');
+    Route::get('review/{id}/edit', [ReviewController::class, 'edit'])->name('review.edit');
+    Route::put('review/{id}', [ReviewController::class, 'update'])->name('review.update');
+    Route::delete('review/{id}', [ReviewController::class, 'destroy'])->name('review.destroy');
     Route::get('user/{id}', [UserController::class, 'show'])->name('user.show');
 });
 

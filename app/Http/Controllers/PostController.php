@@ -18,7 +18,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('tags')->get();
+        $posts = Post::with('tags')->orderBy('created_at', 'desc')->get();
         // Post::all() + Post::tags()で紐づいているデータ
         // ex) $posts[0]->tags[0]->name ・・・最初のpostについている最初のタグ
         
@@ -104,7 +104,7 @@ class PostController extends Controller
         //$new_post->save();
         //タグはpostがsaveされた後にattachするように。
         //$new_post->tags()->attach($tags_id);
-
+        
 
         $post->store_name = $request->input('store_name');
         $post->image = $path[1];
@@ -156,6 +156,19 @@ class PostController extends Controller
     {
         $post = Post::find($id);
 
+        // アップロードされた画像を取得し$imageに代入
+        $image = $request->file('image');
+        
+        // 画像がアップロードされていればstorageに保存
+        // 実際にウェブサイトで画像を表示するにはpublicとstorageをリンクさせる必要がある
+        // $ php artisan storage:link でpublic内にstorageのリンクを作ることができる
+        if ($request->hasFile('image')) {
+            $path = \Storage::put('/public', $image);
+            $path = explode('/', $path);
+        } else {
+            $path = null;
+        }
+
         preg_match_all('/#([a-zA-z0-9０-９ぁ-んァ-ヶー一-龠]+)/u', $request->comment, $match);
         
         $tags = [];
@@ -171,7 +184,9 @@ class PostController extends Controller
 
         $post->tags()->sync($tags_id);
 
+
         $post->store_name = $request->input('store_name');
+        $post->image = $path[1];
         $post->address = $request->input('address');
         $post->store_url = $request->input('store_url');
         $post->sns_url = $request->input('sns_url');
