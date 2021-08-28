@@ -43,17 +43,14 @@
 
                     @auth
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <form method="GET" action="{{ route('review.create', ['id' => $show_post['post']->id ]) }}">
-                            <!-- CROSS Site Request Forgery Protection -->
+                        <!-- <form method="GET" action="{{ route('review.create', ['id' => $show_post['post']->id ]) }}">
                             @csrf
                             <input type="submit" name="send" value="Create review" class="btn btn-dark mx-1">
-                        </form>
+                        </form> -->
                         <form method="GET" action="{{ route('post.edit', ['post' => $show_post['post']->id ]) }}">
-                            <!-- CROSS Site Request Forgery Protection -->
                             @csrf
                             <input type="submit" name="send" value="Edit" class="btn btn-dark mx-1">
                         </form>
-
                         <form method="POST" action="{{ route('post.destroy', ['post' => $show_post['post']->id ]) }}" id="delete_{{ $show_post['post']->id }}">
                             <a href="#" class="btn btn-danger mx-1" data-id="{{ $show_post['post']->id }}" onclick="deletePost(this);">Delete</a>
                             @csrf
@@ -63,30 +60,47 @@
                     @endauth
 
                 </div>
-            </div>         
+            </div>   
             <div class="reviews">
-                @if(!empty($show_post['reviews'][0]))
-                <h3 class="mt-1 mb-0">Review list</h3>
-                @endif
-                @foreach($show_post['reviews'] as $review)
-                
-                <div class="card">
-                    <div class="card-body d-flex justify-content-between">
-                        <div class="detail">
-                            <h5 class="card-title">{{ $review->title }}</h5>
-                            <p class="card-text">{{ $review->comment }}</p>
-                            <h6 class="card-text">
-                                <a href="{{ route('user.show', ['id' => $review->user_id]) }}">{{ $review->user_name }}</a>
-                            </h6>
-                        </div>
-                        @if(!empty($review->image))
-                        <img src="{{ '/storage/' . $review->image }} " class="card-img-top d-inline-block w-25" alt="review_image">
+                <div class="card mt-2">
+                    <div class="card-header">
+                        @if(!empty($show_post['reviews'][0]))
+                        <h3 class="mt-1 mb-0">Review</h3>
                         @endif
                     </div>
+                    <div class="card-body m-1">
+                        <form method="POST" action="{{ route('review.store', ['post_id' => $show_post['post']->id]) }}" enctype="multipart/form-data">
+                            @csrf
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="comment" id="address" placeholder="Tell us your impression">
+                            </div>
+                                <div class="row">
+                                    <div class="col-8">
+                                        <div class="form-group">
+                                            <input type="file" class="form-control-file" name="image" id="image">
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <input type="submit" name="send" value="Submit" class="btn btn-dark btn-block">
+                                    </div>
+                                </div>
+                        </form>
+                    </div>
+                    @foreach($show_post['reviews'] as $review)
+                    <div class="card-body d-flex justify-content-between border-top">
+                    <div class="detail">
+                        <h6 class="card-text">
+                            <a href="{{ route('user.show', ['id' => $review->user_id]) }}">{{ $review->user_name }}</a>
+                        </h6>
+                        <p class="card-text">{{ $review->comment }}</p>
+                            </div>
+                            @if(!empty($review->image))
+                            <img src="{{ '/storage/' . $review->image }} " class="card-img-top d-inline-block w-25" alt="review_image">
+                            @endif
+                        </div>
                 </div>
                 @endforeach
             </div>
-            
         </div>
     </div>
 </div>
