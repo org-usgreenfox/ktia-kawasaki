@@ -70,8 +70,8 @@
                     <div class="container">
                         <div class="row">
                         @foreach($posts as $post)
-                        <div class="box p-2 col-sm-4">
-                            <div class="card mb-2 h-100">
+                        <div class="box p-2 col-6 col-sm-4">
+                            <div class="card mb-2">
                                 <!-- 実際にウェブサイトで画像を表示するにはpublicとstorageをリンクさせる必要がある
                                 $ php artisan storage:link でpublic内にstorageのリンクを作ることができる -->
                                 @if(!empty($post->image))
