@@ -72,6 +72,9 @@
                         <form method="POST" action="{{ route('review.store', ['post_id' => $show_post['post']->id]) }}" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group">
+                                <input type="text" class="form-control" name="title" id="store_name" placeholder="Title">
+                            </div>
+                            <div class="form-group">
                                 <input type="text" class="form-control" name="comment" id="address" placeholder="Tell us your impression">
                             </div>
                                 <div class="row">
