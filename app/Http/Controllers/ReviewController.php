@@ -116,7 +116,9 @@ class ReviewController extends Controller
 
         $review->title = $request->input('title');
         $review->comment = $request->input('comment');
-        $review->image = $path[1];
+        if ($path!==null) {
+            $review->image = $path[1];
+        }
         $review->user_id = Auth::id();
         
        

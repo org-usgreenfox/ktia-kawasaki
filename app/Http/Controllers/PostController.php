@@ -97,17 +97,16 @@ class PostController extends Controller
         foreach($tags as $tag) {
             array_push($tags_id, $tag->id);
         }
-        // dd($tags_id);
-
-
+        
         //$new_post->content = $request->content;
         //$new_post->save();
         //タグはpostがsaveされた後にattachするように。
         //$new_post->tags()->attach($tags_id);
         
-
         $post->store_name = $request->input('store_name');
-        $post->image = $path[1];
+        if ($path!==null){
+            $post->image = $path[1];
+        }
         $post->address = $request->input('address');
         $post->store_url = $request->input('store_url');
         $post->sns_url = $request->input('sns_url');
@@ -186,7 +185,9 @@ class PostController extends Controller
 
 
         $post->store_name = $request->input('store_name');
-        $post->image = $path[1];
+        if ($path!==null) {
+            $post->image = $path[1];
+        }
         $post->address = $request->input('address');
         $post->store_url = $request->input('store_url');
         $post->sns_url = $request->input('sns_url');

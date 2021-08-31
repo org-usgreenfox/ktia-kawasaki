@@ -43,7 +43,7 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="image">Store Image</label>
+                        <label for="image">Store Image（変更する場合は選択してください）</label>
                         <input type="file" class="form-control-file" name="image" id="image">
                     </div>
 

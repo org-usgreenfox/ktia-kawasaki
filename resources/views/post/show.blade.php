@@ -64,10 +64,22 @@
             <div class="reviews">
                 <div class="card mt-2">
                     <div class="card-header">
-                        @if(!empty($show_post['reviews'][0]))
+                    <div class="mx-1 row d-flex justify-content-between align-items-center">
                         <h3 class="mt-1 mb-0">Review</h3>
-                        @endif
+                        @guest
+                            <div class="">
+                            @if (Route::has('login'))
+                                    <a class="" href="{{ route('login') }}">{{ __('Login') }}</a>
+                            @endif
+                            <span> / </span>
+                            @if (Route::has('register'))
+                                    <a class="" href="{{ route('register') }}">{{ __('Register') }}</a>
+                            @endif
+                            </div>
+                        @endguest
                     </div>
+                    </div>
+                    @auth
                     <div class="card-body m-1">
                         <form method="POST" action="{{ route('review.store', ['post_id' => $show_post['post']->id]) }}" enctype="multipart/form-data">
                             @csrf
@@ -77,18 +89,19 @@
                             <div class="form-group">
                                 <input type="text" class="form-control" name="comment" id="address" placeholder="Tell us your impression">
                             </div>
-                                <div class="row">
-                                    <div class="col-8">
-                                        <div class="form-group">
-                                            <input type="file" class="form-control-file" name="image" id="image">
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <input type="submit" name="send" value="Submit" class="btn btn-dark btn-block">
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="form-group">
+                                        <input type="file" class="form-control-file" name="image" id="image">
                                     </div>
                                 </div>
+                                <div class="col-4">
+                                    <input type="submit" name="send" value="Submit" class="btn btn-dark btn-block">
+                                </div>
+                            </div>
                         </form>
-                    </div>
+                    </div>                    
+                    @endauth
                     @foreach($show_post['reviews'] as $review)
                     <div class="card-body d-flex justify-content-between border-top">
                         <div class="detail">
