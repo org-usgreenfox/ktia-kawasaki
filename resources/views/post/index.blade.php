@@ -81,7 +81,7 @@
                     <div class="container p-0">
                         <div class="d-flex flex-row flex-wrap">
                         @foreach($posts as $post)
-                        <div class="box p-2 w-33" id="store-article{{ $post['id'] }}">
+                        <div class="box p-2 w-33 col-6 col-sm-4" id="store-article{{ $post['id'] }}">
                             <div class="card mb-2">
                                 <!-- 実際にウェブサイトで画像を表示するにはpublicとstorageをリンクさせる必要がある
                                 $ php artisan storage:link でpublic内にstorageのリンクを作ることができる -->

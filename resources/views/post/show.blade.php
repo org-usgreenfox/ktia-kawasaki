@@ -74,6 +74,7 @@
                     <div class="card-body d-flex justify-content-between">
                         <div class="detail">
                             <h5 class="card-title">{{ $review->title }}
+                                @auth
                                 @if ($review->user_id === Auth::user()->id)
                                 <a href="{{ route('review.edit', ['id' => $review->id]) }}"><i class="fas fa-pen-square ml-2"></i></a>
                                 <form method="POST" action="{{ route('review.destroy', ['id' => $review->id]) }}" id="delete_review_{{ $review->id }}">
@@ -82,6 +83,7 @@
                                     @method('DELETE')
                                 </form>
                                 @endif
+                                @endauth
                             </h5>
                             <p class="card-text">{{ $review->comment }}</p>
                             <h6 class="card-text">
